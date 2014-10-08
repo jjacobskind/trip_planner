@@ -1,15 +1,154 @@
 {%extends "layout.html" %}
 
 	{% block content %}
-		<script>
-		 
-			{% autoescape false %}
+
+
+	<!-- Page container -->
+	<div class="container-fluid">
+
+		<!-- Day buttons/toolbars & Dropdown menus -->
+		<div class="row">
+			<div class="col-lg-5">
+				<!-- Itinerary "Days" buttons/toolbar -->
+				<div class="btn-group days" role="toolbar">
+					<button type="button" class="btn btn-default">Day 1</button>
+					<button type="button" class="btn btn-default">Day 2</button>
+					<button type="button" class="btn btn-default">Day 3</button>
+				</div>
+
+				<!-- "+ Add Day" button/toolbar -->
+				<div class="btn-group" role="toolbar" id="add_day">
+					<button type="button" class="btn btn-default">+ Add Day</button>
+				</div>
+
+			</div>
+			<!-- The dropdown headers and menus -->
+			<div class="dropdown_menus col-lg-7">
+
+					<!-- "Hotels" split button -->				
+				<div class="menus">
+					<h2>
+						Hotels
+					</h2>
+
+					<div class="btn-group">
+					  	<button type="button" class="btn btn-default">Hotels</button>
+					  	<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+						  	<span class="caret"></span>
+						    <span class="sr-only">Toggle Dropdown</span>
+					  	</button>
+					  	
+					  	<!-- populating the hotels dropdown -->
+
+						<ul class="dropdown-menu" role="menu">
+							{% for hotel in hotels %}
+								<li>
+									<a href="#">{{hotel.name}}</a>  
+								</li>
+							{% endfor %}
+						</ul>
+					</div>
+					
+					<!-- Hotels "Add" button -->
+					<button type="button" class="btn btn-primary" id="hotels_add">
+						Add
+					</button>
+				</div>	<!-- End "Hotels" section -->
+
+					<!-- "Activties" split button -->
+				<div class="menus">
+					<h2>
+						Activities
+					</h2>
+				
+					<div class="btn-group">
+					  	<button type="button" class="btn btn-default">Activities</button>
+					  	<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+						  	<span class="caret"></span>
+						    <span class="sr-only">Toggle Dropdown</span>
+					  	</button>
+						
+						<!-- populating the "Activities" dropdown -->
+					  	<ul class="dropdown-menu" role="menu">
+							{% for activity in activities %}
+  								<li>
+  									<a href="#">{{activity.name}}</a>  
+  								</li>
+							{% endfor %}
+						</ul>
+					</div> 
+
+					<!-- Activities "Add" button -->
+					<button type="button" class="btn btn-primary" id="activities_add">
+						Add
+					</button>
+				</div>	<!-- End "Activities" section -->
+
+					<!-- Restaurant split button -->
+				<div class="menus">
+					<h2>
+						Restaurants
+					</h2>
+				
+					<div class="btn-group">
+					  	<button type="button" class="btn btn-default">Restaurants</button>
+					  	<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+						  	<span class="caret"></span>
+						    <span class="sr-only">Toggle Dropdown</span>
+					  	</button>
+						
+							<!-- populating the "Restaurants" dropdown -->
+					  	<ul class="dropdown-menu" role="menu">
+								{% for restaurant in restaurants %}
+	  								<li>
+	  									<a href="#">{{restaurant.name}}</a>  
+	  								</li>
+								{% endfor %}
+						</ul>
+					</div> 
+
+					<!-- Restaurants "Add" button -->
+					<button type="button" class="btn btn-primary" id="restaurants_add">
+						Add
+					</button>
+				</div>	<!-- End "Restaurants" section -->
+			</div>
+		</div>
+
+			<!-- Trip info -->
+		<div class="row">
+			<div class="col-lg-5">
+				<div class="dynamic_fill">
+					
+				</div>
+			</div>
+			
+				<!-- Map -->
+			<div class="col-lg-7">
+				<div class="map" id="map-canvas">
+					
+				</div>
+			</div>
+		</div>
+
+	</div>	<!-- end container -->
+
+
+	<script>
+		 	
+		{% autoescape false %}
 			var all_hotels = {{ hotels | json }};
 			var all_restaurants = {{ restaurants | json }};
 			var all_activities = {{ activities | json }};
-			console.log(all_hotels);
-			{% endautoescape %}
-		 
-		</script>
+			console.log(all_hotels[0].name);
+			console.log(all_activities[0].name);
+			console.log(all_restaurants.length);
+		{% endautoescape %}
+	 
+	</script>
+	
+	<script type="text/javascript" src ="/bower_components/jquery/dist/jquery.min.js"></script>
+	<script type="text/javascript" src ="/bower_components/bootstrap/js/dropdown.js"></script>
+	<script type="text/javascript" src ="/javascript/main.js"></script>
 
 	{% endblock %}

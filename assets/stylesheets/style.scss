@@ -1,0 +1,32 @@
+@import "normalize.scss";
+@import "modern_business.scss";
+
+.days {
+	margin: 40px 0 0 40px;
+}
+
+#add_day{
+	margin: 40px 0 0 20px;
+}
+
+.dropdown_menus {
+}
+
+.menus {
+	display: inline-block;
+	margin: 1em;
+}
+
+
+h2 {
+	text-decoration: underline;
+}
+
+.gm-style{
+	margin: 0;
+}
+
+#map-canvas{
+	height: 400px;
+	width: 900px;
+}
