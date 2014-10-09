@@ -32,7 +32,7 @@
 					</h2>
 
 					<div class="btn-group">
-					  	<button type="button" class="btn btn-default">Hotels</button>
+					  	<button type="button" class="btn btn-default cur-val" data-id="null">Hotels</button>
 					  	<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
 						  	<span class="caret"></span>
 						    <span class="sr-only">Toggle Dropdown</span>
@@ -43,7 +43,7 @@
 						<ul class="dropdown-menu" role="menu">
 							{% for hotel in hotels %}
 								<li>
-									<a href="#">{{hotel.name}}</a>  
+									<a href="#" data-id="{{hotel.id}}">{{hotel.name}}</a>  
 								</li>
 							{% endfor %}
 						</ul>
@@ -62,7 +62,7 @@
 					</h2>
 				
 					<div class="btn-group">
-					  	<button type="button" class="btn btn-default">Activities</button>
+					  	<button type="button" class="btn btn-default cur-val" data-id="null">Activities</button>
 					  	<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
 						  	<span class="caret"></span>
 						    <span class="sr-only">Toggle Dropdown</span>
@@ -72,7 +72,7 @@
 					  	<ul class="dropdown-menu" role="menu">
 							{% for activity in activities %}
   								<li>
-  									<a href="#">{{activity.name}}</a>  
+  									<a href="#" data-id="{{activity.id}}">{{activity.name}}</a>  
   								</li>
 							{% endfor %}
 						</ul>
@@ -91,7 +91,7 @@
 					</h2>
 				
 					<div class="btn-group">
-					  	<button type="button" class="btn btn-default">Restaurants</button>
+					  	<button type="button" class="btn btn-default cur-val" data-id="null">Restaurants</button>
 					  	<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
 						  	<span class="caret"></span>
 						    <span class="sr-only">Toggle Dropdown</span>
@@ -101,7 +101,7 @@
 					  	<ul class="dropdown-menu" role="menu">
 								{% for restaurant in restaurants %}
 	  								<li>
-	  									<a href="#">{{restaurant.name}}</a>  
+	  									<a href="#" data-id="{{id.restaurant}}">{{restaurant.name}}</a>  
 	  								</li>
 								{% endfor %}
 						</ul>
@@ -140,9 +140,6 @@
 			var all_hotels = {{ hotels | json }};
 			var all_restaurants = {{ restaurants | json }};
 			var all_activities = {{ activities | json }};
-			console.log(all_hotels[0].name);
-			console.log(all_activities[0].name);
-			console.log(all_restaurants.length);
 		{% endautoescape %}
 	 
 	</script>

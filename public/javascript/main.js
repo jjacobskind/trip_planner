@@ -27,7 +27,24 @@ function initialize_gmaps() {
 
   $("#map-canvas").append("map");
 }
+
+
  
 $(document).ready(function() {
   initialize_gmaps();
+
+  $(".dropdown-menu").on('click', 'a', function(event) {
+    event.preventDefault();
+    var top_field = $(this).closest("div").children().first();
+    top_field.text($(this).text());
+    var id = $(this).data("id");
+    top_field.attr("data-id", id);
+
+  });
+
+  $(".btn-primary").on("click", function() {
+    event.preventDefault();
+    var text = $(this).prev().children("button:first").text()
+  });
+
 }); 
