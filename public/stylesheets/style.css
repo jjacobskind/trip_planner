@@ -406,22 +406,46 @@ footer {
     height: 70%;
     /* increases the carousel height so it looks good on phones */ } }
 
-.days {
-  margin: 40px 0 0 40px; }
+.container-fluid {
+  width: 85%;
+  margin: 0 auto; }
+
+/*******  Day boxes  *********/
+.days_group {
+  margin: 3em 3em; }
+  .days_group .day {
+    padding: 0.75em 1em; }
 
 #add_day {
-  margin: 40px 0 0 20px; }
+  margin: 3em 0;
+  padding: 0.75em; }
 
-.menus {
-  display: inline-block;
-  margin: 1em; }
+/*******  Dropdown Menus *********/
+.dropdown_menus {
+  align-content: center; }
+  .dropdown_menus .menus {
+    display: inline-block;
+    box-sizing: border-box;
+    width: 275px;
+    margin: 2em 0.5em 0 0.5em;
+    padding: 1em 2em;
+    border-radius: 5px;
+    background-color: #EEE;
+    text-align: center; }
+    .dropdown_menus .menus h2 {
+      text-decoration: underline;
+      margin: 0 0 0.8em; }
+    .dropdown_menus .menus .dropdown-menu {
+      border: 1px solid #000;
+      text-align: left; }
+  .dropdown_menus .btn-default {
+    float: left;
+    margin: 0 auto;
+    max-width: 135px; }
 
-h2 {
-  text-decoration: underline; }
-
-.gm-style {
-  margin: 0; }
-
+/******* Google Maps ***********/
 #map-canvas {
-  height: 400px;
-  width: 900px; }
+  margin-top: 3em;
+  height: 500px;
+  width: 900px;
+  box-shadow: 2px 2px 12px #888; }
