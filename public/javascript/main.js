@@ -1,3 +1,5 @@
+var trip = {name:"Trip1"};
+
 function initialize_gmaps() {
  
   // initialize new google maps LatLng object
@@ -33,6 +35,9 @@ function initialize_gmaps() {
 $(document).ready(function() {
   initialize_gmaps();
 
+  var numDays = 3;
+
+  //Dropdown item click handler
   $(".dropdown-menu").on('click', 'a', function(event) {
     event.preventDefault();
     var top_field = $(this).closest("div").children().first();
@@ -42,9 +47,25 @@ $(document).ready(function() {
 
   });
 
+  // "Add" button click handler
   $(".btn-primary").on("click", function() {
     event.preventDefault();
     var text = $(this).prev().children("button:first").text()
+  });
+
+  // "Add Day" button click handler
+  $("#add_day").on('click', 'button', function(event) {
+    event.preventDefault();
+    numDays++;
+    var dayBar = $("#add_day").parent().children().first();
+    if(numDays<5) {
+      dayBar.append('<button type="button" class="btn btn-default">Day ' + numDays + '</button>');
+    }
+    else if (numDays===5) {
+      //clear div and insert dropdown menu
+    } else {
+      //add iitem to dropdown menu
+    }
   });
 
 }); 

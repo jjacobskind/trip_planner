@@ -4,8 +4,6 @@ mongoose.connect("mongodb://localhost/tripplanner");
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'mongodb connection error: '));
 
-var Place, Hotel, Activity, Restaurant;
-
 var Schema = mongoose.Schema;
 
 var placeSchema = new Schema({
@@ -44,14 +42,22 @@ var restaurantSchema = new Schema ({
 	}
 });
 
-Place = mongoose.model('Place', placeSchema);
-Hotel = mongoose.model('Hotel', hotelSchema);
-Activity = mongoose.model('Activity', activitySchema);
-Restaurant = mongoose.model('Restaurant', restaurantSchema);
+var tripSchema = new Schema({
+	name: {type: String, required:true},
+	days: [{
+		hotel: {
+			type: String,
+			required:true
+		},
+		restaurants: [String],	//ids of restaurants
+		activities: [String] 	//ids of activities
+	}]
+});
 
 module.exports = {
-	"Place": Place,
-	"Hotel": Hotel,
-	"Activity": Activity,
-	"Restaurant": Restaurant
+	"Place": mongoose.model('Place', placeSchema),
+	"Hotel": mongoose.model('Hotel', hotelSchema),
+	"Activity": mongoose.model('Activity', activitySchema),
+	"Restaurant": mongoose.model('Restaurant', restaurantSchema),
+	"Trip": mongoose.model('Trip', tripSchema)
 };

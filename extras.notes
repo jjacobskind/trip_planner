@@ -1,1 +1,13 @@
 1) Getter and setter functions to format phone number in placeSchema
+2) Convert day button bar to list when number of days >=5
+3) Create validation for restaurant length in tripSchema
+
+
+
+
+
+
+//*************************Notes for the future
+
+1) For time being, we only have one trip in Trip collection. Search using findOne with no search criteria
+	-When we want to support multiple trips, make sure to change findOne searches to include an id criterion
