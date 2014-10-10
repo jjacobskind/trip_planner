@@ -2,7 +2,8 @@ var trip = {name:"Trip1", days: [{restaurants: [], activities: []}]};
 
 var whichDay = 1;
 var numDays = 1;    //!!!!! To be changed so that it gets set by length of days in object supplied by database!!!!!
-var all_markers = {};
+var all_markers =[{}];
+// var all_markers[whichDay-1] = all_markers[0];
 
 
 function initialize_gmaps() {
@@ -55,8 +56,8 @@ $(document).ready(function() {
     }
     else if(whichButton==="hotels_add") {
       if(!!current_day.hotel) {
-        all_markers[current_day.hotel].setMap(null);
-        delete all_markers[current_day.hotel];
+        all_markers[whichDay-1][current_day.hotel].setMap(null);
+        delete all_markers[whichDay-1][current_day.hotel];
       }
       current_day.hotel=id;
       populateList();
@@ -84,8 +85,8 @@ $(document).ready(function() {
         position: getLocation(type, id),
         title: getProperty(type, id, "name")
     });
-    if(!all_markers.hasOwnProperty(id) || all_markers[id].map===null) {
-      all_markers[id]=marker;
+    if(!all_markers[whichDay-1].hasOwnProperty(id) || all_markers[whichDay-1][id].map===null) {
+      all_markers[whichDay-1][id]=marker;
       marker.setMap(map);
     }
   });
@@ -96,6 +97,7 @@ $(document).ready(function() {
     event.preventDefault();
     numDays++;
     trip.days.push({restaurants: [], activities: []});
+    all_markers.push({});
     var dayBar = $("#add_day_group").parent().children().first();
     // if(numDays<5) {
       dayBar.append('<button type="button" class="btn btn-default day" data-id="'+ numDays + '">Day ' + numDays + '</button>');
@@ -109,7 +111,18 @@ $(document).ready(function() {
 
   $(".days_group").on('click', 'button', function() {
     event.preventDefault();
+    for(var key in all_markers[whichDay-1]) {
+      if(all_markers[whichDay-1].hasOwnProperty(key)) {
+        all_markers[whichDay-1][key].setMap(null);
+      }
+    }
     whichDay = $(this).data("id");
+    all_markers[whichDay-1] = all_markers[whichDay-1];
+    for(var key in all_markers[whichDay-1]) {
+      if(all_markers[whichDay-1].hasOwnProperty(key)) {
+        all_markers[whichDay-1][key].setMap(map);
+      }
+    }
     $(this).parent().children().removeClass("btn-primary");
     $(this).addClass("btn-primary");
     populateList("complete");
@@ -152,8 +165,8 @@ $(document).ready(function() {
       }
     }
     if(twice===false) {
-      all_markers[id].setMap(null);
-      delete all_markers[id];
+      all_markers[whichDay-1][id].setMap(null);
+      delete all_markers[whichDay-1][id];
     }
   });
 
