@@ -45,9 +45,9 @@ var restaurantSchema = new Schema ({
 var tripSchema = new Schema({
 	name: {type: String, required:true},
 	days: [{
-		hotel: String,
-		restaurants: [String],	//ids of restaurants
-		activities: [String] 	//ids of activities
+		hotel: {type: Schema.Types.ObjectId, ref:'Hotel'},
+		restaurants: [{type: Schema.Types.ObjectId, ref: 'Restaurant'}],	//ids of restaurants
+		activities: [{type: Schema.Types.ObjectId, ref: 'Activity'}] 	//ids of activities
 	}]
 });
 

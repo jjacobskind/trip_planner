@@ -14,14 +14,13 @@ router.post('/', function(req, res) {
 				"name":"Test Trip",
 				"_id": trip_id,
 				"days":[{
-					"hotel":"",
+					// "hotel":"",
 					"activities":[],
 					"restaurants":[]
 				}]
 			});
 		}
 		if(action==="add") {
-			console.log("INSIDE ADD");
 			if(attraction_type==="hotel") {
 				obj.days[day_id][attraction_type]=attraction_id;
 			} else if (attraction_type==="day") {
@@ -50,10 +49,17 @@ router.post('/', function(req, res) {
 	});
 });
 
-// router.get('/:trip_id/:day_num', function(req, res) {
-// 	var trip_id = req.params.trip_id;
-// 	var day_num = req.params.day_num;
-// 	day.populate("hotel activities restaurants")
-// });
+router.get('/:trip_id/:day_num', function(req, res) {
+	var trip_id = req.params.trip_id;
+	var day_num = req.params.day_num-1;
+	model.Trip.findOne({"_id":trip_id}, function(err, item){
+		item.populate('days[' + day_num + '].activities days[' + day_num + '].restaurants', function(err, pop) {
+			var activities = pop.days[day_num].activities;
+			var restaurants = pop.days[day_num].restaurants;
+			console.log(restaurants);
+		});
+	});
+	res.end();
+});
 
 module.exports = router;

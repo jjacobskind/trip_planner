@@ -48,6 +48,10 @@ $(document).ready(function() {
   initialize_gmaps();
   populateList();
 
+  $.get('/trips/543d5895809f5d6f53e2ae17/1', function(response) {
+    console.log(response);
+  });
+
 
   //Event handler for when dropdown item is clicked
   $(".dropdown-menu").on('click', 'a', function(event) {
