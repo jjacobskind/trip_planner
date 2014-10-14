@@ -445,7 +445,16 @@ footer {
 
 /******* Google Maps ***********/
 #map-canvas {
-  margin-top: 3em;
+  margin-top: 25px;
   height: 500px;
   width: 900px;
   box-shadow: 2px 2px 12px #888; }
+
+@media screen and (max-width: 2000px) {
+  .dropdown_menus .menus {
+    width: 250px; }
+  .dropdown_menus .btn-default {
+    max-width: 110px; }
+  #map-canvas {
+    height: 400px;
+    width: 810px; } }
