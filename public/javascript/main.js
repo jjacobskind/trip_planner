@@ -1,4 +1,4 @@
-var trip = {name:"Trip1", days: [{restaurants: [], activities: []}]};
+var trip = {id:"", name:"Trip1", days: [{restaurants: [], activities: []}]};
 
 var whichDay = 1;
 var numDays = 1;    //!!!!! To be changed so that it gets set by length of days in object supplied by database!!!!!
@@ -59,6 +59,24 @@ $(document).ready(function() {
 
   });
 
+  var updateTrip = function(type, attraction_id, action) {
+    if(type==="hotels") {
+      type="hotel";
+    }
+    var post_data = {
+        "attraction_id": attraction_id,
+        "attraction_type": type,
+        "trip_id": "543d5895809f5d6f53e2ae17",
+        "day_id": whichDay,
+        "action": action
+    };
+
+
+    $.post('/trips', post_data, function(responseData) {
+        trip.id = responseData;
+    });
+  };
+
   //Event handler for when "Add" (hotel/activity/restaurant) button is clicked
   $(".btn-primary").on("click", function() {
     event.preventDefault();
@@ -101,7 +119,9 @@ $(document).ready(function() {
     if(!day_markers.hasOwnProperty(id) || day_markers[id].map===null) {
       addMarker(id, type);
     }
+    updateTrip(type, id, "add");
   });
+
 
 
   //Event handler for when "Add Day" button is clicked
@@ -112,6 +132,22 @@ $(document).ready(function() {
     all_markers.push({});
     var dayBar = $("#add_day_group").parent().children().first();
     dayBar.append('<button type="button" class="btn btn-default day" data-id="'+ numDays + '">Day ' + numDays + '</button>');
+    updateTrip("day", null, "add");
+    $(".days_group").children(".btn-primary").removeClass("btn-primary");
+    $(".days_group button:last-child").addClass("btn-primary");
+    for(var key in day_markers) {
+      if(day_markers.hasOwnProperty(key)) {
+        day_markers[key].setMap(null);
+      }
+    }
+    whichDay=numDays;
+    day_markers = all_markers[whichDay-1];
+    for(var key in day_markers) {
+      if(day_markers.hasOwnProperty(key)) {
+        day_markers[key].setMap(map);
+      }
+    }
+    populateList();
   });
 
   //Event handler for when day is changed
@@ -131,7 +167,7 @@ $(document).ready(function() {
     }
     $(this).parent().children().removeClass("btn-primary");
     $(this).addClass("btn-primary");
-    populateList("complete");
+    populateList();
  });
 
   //Event handler for when remove button is clicked
@@ -145,6 +181,7 @@ $(document).ready(function() {
     switch(type) {
       case "hotel":
         trip.days[whichDay-1].hotel=undefined;
+        var searchKey = "hotel";
         break;
       case "activity":
         searchArr = trip.days[whichDay-1].activities;
@@ -162,6 +199,7 @@ $(document).ready(function() {
         times_found++;
       }
     }
+    updateTrip(searchKey, id, "remove");
     populateList();
     if(times_found<=1) {
       day_markers[id].setMap(null);
@@ -179,11 +217,13 @@ $(document).ready(function() {
     }
     all_markers.splice(dayNum, 1);
     trip.days.splice(dayNum, 1);
-    $("#days_group:last-child").remove();
-    if(dayNum>=trip.days.length) {
-      whichDay = trip.days.length-1;
-      $("#days_group .btn-active").removeClass(".btn-active");
-      $("#days_group:last-child").addClass(".btn-active");
+    $(".days_group button:last-child").remove();
+    numDays--;
+    updateTrip("day", null, "remove");
+    if(dayNum>=numDays) {
+      whichDay = numDays;
+      $(".days_group .btn-primary").removeClass("btn-primary");
+      $(".days_group button:last-child").addClass("btn-primary");
     }
     populateList();
   });
